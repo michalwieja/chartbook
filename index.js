@@ -17,7 +17,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
-app.get("/", verify, (req, res) => res.send("get ok"));
+app.get("/", (req, res) => res.send("get ok"));
 app.use("/auth", authRouter);
 
 mongoose
