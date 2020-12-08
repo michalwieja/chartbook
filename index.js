@@ -4,6 +4,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import authRouter from "./router/authRouter.js";
+import verify from "./router/verifyToken.js";
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
-app.get("/", (req, res) => res.send("get ok"));
+app.get("/", verify, (req, res) => res.send("get ok"));
 app.use("/auth", authRouter);
 
 mongoose

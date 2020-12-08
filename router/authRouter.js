@@ -2,6 +2,7 @@ import express from "express";
 import User from "../models/UserModel.js";
 import Joi from "joi";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 // schema validataion
@@ -46,7 +47,9 @@ router.post("/login", async (req, res) => {
   const validUser = await bcrypt.compare(req.body.password, user.password);
   if (!validUser) return res.status(400).send("wrong pass");
 
-  res.send("logged in");
+  // create and asign a token
+  const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET);
+  res.header("auth-token", token);
 });
 
 export default router;
